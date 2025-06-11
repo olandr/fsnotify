@@ -259,7 +259,7 @@ func (w *kqueue) Add(name string) error { return w.AddWith(name) }
 
 func (w *kqueue) AddWith(name string, opts ...addOpt) error {
 	if debug {
-		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  AddWith(%q)\n",
+		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  kqueue AddWith(%q)\n",
 			time.Now().Format("15:04:05.000000000"), name)
 	}
 

@@ -113,7 +113,7 @@ func (w *readDirChangesW) AddWith(name string, opts ...addOpt) error {
 		return ErrClosed
 	}
 	if debug {
-		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  AddWith(%q)\n",
+		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  windows AddWith(%q)\n",
 			time.Now().Format("15:04:05.000000000"), filepath.ToSlash(name))
 	}
 

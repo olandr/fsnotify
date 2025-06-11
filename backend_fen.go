@@ -65,7 +65,7 @@ func (w *fen) AddWith(name string, opts ...addOpt) error {
 		return ErrClosed
 	}
 	if debug {
-		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  AddWith(%q)\n",
+		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  fen AddWith(%q)\n",
 			time.Now().Format("15:04:05.000000000"), name)
 	}
 

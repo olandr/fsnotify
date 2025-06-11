@@ -182,7 +182,7 @@ func (w *inotify) AddWith(path string, opts ...addOpt) error {
 		return ErrClosed
 	}
 	if debug {
-		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  AddWith(%q)\n",
+		fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  inotify AddWith(%q)\n",
 			time.Now().Format("15:04:05.000000000"), path)
 	}
 
@@ -226,7 +226,15 @@ func (w *inotify) AddWith(path string, opts ...addOpt) error {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	path, recurse := recursivePath(path)
+	fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  Using recurse %v\n",
+		time.Now().Format("15:04:05.000000000"), recurse)
+
 	if recurse {
+		if debug {
+			fmt.Fprintf(os.Stderr, "FSNOTIFY_DEBUG: %s  Recurse(%q)\n",
+				time.Now().Format("15:04:05.000000000"), path)
+		}
+
 		return filepath.WalkDir(path, func(root string, d fs.DirEntry, err error) error {
 			if err != nil {
 				return err
@@ -482,6 +490,7 @@ func (w *inotify) handleEvent(inEvent *unix.InotifyEvent, buf *[65536]byte, offs
 	}
 
 	ev := w.newEvent(name, inEvent.Mask, inEvent.Cookie)
+	fmt.Printf("Running with recurse: %v \n", watch.recurse())
 	// Need to update watch path for recurse.
 	if watch.recurse() {
 		isDir := inEvent.Mask&unix.IN_ISDIR == unix.IN_ISDIR
